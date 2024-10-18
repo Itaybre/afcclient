@@ -1,0 +1,33 @@
+name: Build afcclient
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-13
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          brew install make
+
+      - name: Build afcclient
+        run: |
+          git clone https://github.com/Itaybre/afcclient.git
+          cd afcclient
+          make
+          
+      - name: Upload afcclient artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: afcclient
+          path: afcclient/afcclient

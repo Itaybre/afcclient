@@ -1,6 +1,7 @@
 CC=clang
-CFLAGS=
-LDFLAGS=-limobiledevice -lplist
+# CFLAGS=
+# LDFLAGS=-llibmobiledevice -lplist
+ARCH_FLAGS=-arch x86_64 -arch arm64
 
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
@@ -17,8 +18,11 @@ TARGETS=afcclient
 
 all: $(TARGETS)
 
-afcclient: afcclient.o libidev.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+%.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS) $(ARCH_FLAGS) $(shell pkg-config --cflags libimobiledevice-1.0)
+
+afcclient: afcclient.o libidev.o 
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS) $(ARCH_FLAGS) $(shell pkg-config --libs --cflags libimobiledevice-1.0)
 
 clean:
 	rm -rf *.dSYM *.o *.gch $(TARGETS)

@@ -576,10 +576,10 @@ int main(int argc, char **argv)
                 break;
 
             case 'u':
-                if ((strlen(optarg) != 40)) {
-                    fprintf(stderr, "Error: invalid udid (wrong length): %s\n", optarg);
-                    return EXIT_FAILURE;
-                }
+                // if ((strlen(optarg) != 40) && strlen(optarg) != 25) {
+                //     fprintf(stderr, "Error: invalid udid (wrong length): %s\n", optarg);
+                //     return EXIT_FAILURE;
+                // }
 
                 udid = optarg;
                 break;
